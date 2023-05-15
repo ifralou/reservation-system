@@ -1,9 +1,6 @@
 import React from 'react';
-import {useUser, withPageAuthRequired} from '@auth0/nextjs-auth0/client';
-import {Box, Grid, GridItem, Heading, Spinner, Stack, Text} from "@chakra-ui/react";
-import Head from "next/head";
-import CustomGrid from "@/components/CustomGrid";
-import Navigation from "@/components/Navigation/Navigation";
+import {useUser } from '@auth0/nextjs-auth0/client';
+import { Grid, GridItem } from "@chakra-ui/react";
 import RoomCard from "@/components/RoomCard";
 import SiteWrapper from "@/components/SiteWrapper";
 import {dashboardFetcher} from "@/fetchers";

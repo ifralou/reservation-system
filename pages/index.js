@@ -1,7 +1,10 @@
 import {Heading, Stack, Text} from "@chakra-ui/react";
 import SiteWrapper from "@/components/SiteWrapper";
+import MainButton from "@/components/MainButton";
+import {useUser} from "@auth0/nextjs-auth0/client";
 
 export default function Home() {
+    const { user } = useUser();
     return (
         <SiteWrapper>
             <Stack as="section" maxW="90%" spacing={6} p={12}>
@@ -18,6 +21,9 @@ export default function Home() {
                     applications, the Meeting Room Reservation System greatly simplifies office logistics, ensuring a
                     more organized and productive work environment.
                 </Text>
+                <MainButton href="/dashboard">
+                    { user ? "Dashboard" : "Take a look at what we have, mate."}
+                </MainButton>
             </Stack>
         </SiteWrapper>
     )

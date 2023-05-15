@@ -1,13 +1,36 @@
 import React from 'react';
-import {Text} from "@chakra-ui/react";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import {Flex, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, VStack} from "@chakra-ui/react";
+import SiteWrapper from "@/components/SiteWrapper";
 
 export default function Admin() {
-    const { user } = useUser();
 
     return (
-        <div>
-            <Text>If you are not and admin then pizdec.</Text>
-        </div>
+        <SiteWrapper>
+            <VStack w="100%">
+                <Flex>
+                    <Heading>Admin Dashboard</Heading>
+                </Flex>
+
+                <Tabs w="100%">
+
+                    <TabList>
+                        <Tab>Rooms</Tab>
+                        <Tab>Users</Tab>
+                    </TabList>
+
+                    <TabPanels>
+                        <TabPanel>
+                            Room managment things.
+                        </TabPanel>
+
+                        <TabPanel>
+                            User managment things.
+                        </TabPanel>
+                    </TabPanels>
+
+                </Tabs>
+
+            </VStack>
+        </SiteWrapper>
     );
 };

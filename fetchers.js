@@ -45,7 +45,23 @@ export const dashboardFetcher = async (content) => {
 // Full info about a room.
 export const roomFetcher = async (context) => {
     return {
-
+        id: 0,
+        name: "Main room",
+        description: "A large, well-equipped space for presentations and conferences, featuring comfortable seating and audio-visual equipment.",
+        img: "",
+        capacity: 20,
+        occupied: false,
+        layout: "U-shaped",
+        noise_level: "low",
+        air_conditioned: true,
+        has_projector: true,
+        has_whiteboard: true,
+        has_printer: false,
+        has_sound_system: true,
+        wifi_access: true,
+        has_phone: false,
+        wheelchair_accessible: true,
+        has_refreshments: false
     }
 };
 

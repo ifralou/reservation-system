@@ -17,9 +17,8 @@ export default withMiddlewareAuthRequired(async function (req) {
 
 export const config = {
     matcher: [
-        "/dashboard",
-        "/admin",
-        "/rooms/:id*",
-        "/me"
+        "*/dashboard",
+        "*/admin",
+        "*/rooms/:id*"
     ]
 }

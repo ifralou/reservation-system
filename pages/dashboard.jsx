@@ -38,7 +38,7 @@ export default function Dashboard({rooms}) {
     )
 };
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
     return {
         props: {
             rooms: await dashboardFetcher(context)

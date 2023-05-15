@@ -1,8 +1,11 @@
 import React from 'react';
 import {Card, CardBody, CardFooter, CardHeader, Heading, Text} from "@chakra-ui/react";
 import SiteWrapper from "@/components/SiteWrapper";
+import {useRouter} from "next/router";
 
-export default function RoomOverview({room}) {
+export default function RoomOverview() {
+    const router = useRouter();
+    const room = { id: router.query.id }
 
     return (
         <SiteWrapper>
@@ -26,18 +29,4 @@ export default function RoomOverview({room}) {
             </Card>
         </SiteWrapper>
     );
-}
-
-
-export async function getServerSideProps(context) {
-    const roomId = context.query.id;
-
-    return {
-        props: {
-            //TODO: user fetcher here
-            room: {
-                id: roomId
-            }
-        }
-    }
 }

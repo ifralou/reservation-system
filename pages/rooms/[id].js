@@ -1,32 +1,23 @@
 import React from 'react';
-import {Card, CardBody, CardFooter, CardHeader, Heading, Text} from "@chakra-ui/react";
-import SiteWrapper from "@/components/SiteWrapper";
-import {useRouter} from "next/router";
+import SiteWrapper from "@/components/SiteWrapper/SiteWrapper";
+import { roomFetcher } from "@/fetchers";
+import RoomEmpty from "@/components/RoomCardDetailed/RoomEmpty";
+import RoomCardDetailed from "@/components/RoomCardDetailed/RoomCardDetailed";
 
-export default function RoomOverview() {
-    const router = useRouter();
-    const room = { id: router.query.id }
-
+export default function RoomOverview({room}) {
     return (
         <SiteWrapper>
-            <Card w="100%">
-                <CardHeader>
-                    <Heading>
-                        Room N{room.id}
-                    </Heading>
-                </CardHeader>
-
-                <CardBody>
-                   <Text>
-                       This is a room
-                   </Text>
-                </CardBody>
-
-                <CardFooter>
-                    Pokic
-                </CardFooter>
-
-            </Card>
+            {
+                room ? <RoomCardDetailed room={room}/> : <RoomEmpty/>
+            }
         </SiteWrapper>
     );
+}
+
+export async function getServerSideProps(context) {
+    return {
+        props: {
+            room: await roomFetcher(context.query.id)
+        }
+    }
 }

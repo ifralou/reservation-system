@@ -1,4 +1,15 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Reservation system semestral for flexing some Next.js
+
+#### Deployment: [Vercel](https://reservation-system-five.vercel.app/)
+#### Next.js: Kind of 13, but 12 things are used.
+#### Things used:
+- Next.js
+- Chakra UI
+- Auth0
+
+#### Functions:
+- Frontend app
+- Security Proxy
 
 ## Getting Started
 
@@ -11,3 +22,9 @@ yarn dev
 # or
 pnpm dev
 ```
+## Milestones:
+
+- Add authorization
+- Finish UI
+- Integrate Java BE
+- Release MVP

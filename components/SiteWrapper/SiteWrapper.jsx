@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from "next/head";
-import CustomGrid from "@/components/CustomGrid";
+import CustomGrid from "@/components/SiteWrapper/CustomGrid";
 import {GridItem} from "@chakra-ui/react";
 import Navigation from "@/components/Navigation/Navigation";
 

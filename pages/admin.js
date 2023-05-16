@@ -1,6 +1,6 @@
 import React from 'react';
 import {Flex, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, VStack} from "@chakra-ui/react";
-import SiteWrapper from "@/components/SiteWrapper";
+import SiteWrapper from "@/components/SiteWrapper/SiteWrapper";
 
 export default function Admin() {
 

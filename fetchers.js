@@ -5,7 +5,7 @@
  * @param content
  * @returns {Promise<[{img: string, name: string, description: string, id: number, occupied: boolean, capacity: number},{img: string, name: string, description: string, id: number, occupied: boolean, capacity: number},{img: string, name: string, description: string, id: number, occupied: boolean, capacity: number},{img: string, name: string, description: string, id: number, occupied: boolean, capacity: number}]>}
  */
-export const dashboardFetcher = async (content) => {
+export const dashboardFetcher = async () => {
     return [
         {
             id: 0,
@@ -41,28 +41,89 @@ export const dashboardFetcher = async (content) => {
 };
 
 
+const roomsDetailed = [
+    {
+        "id": 0,
+        "name": "Main room",
+        "description": "A large, well-equipped space for presentations and conferences, featuring comfortable seating and audio-visual equipment.",
+        "img": "",
+        "capacity": 20,
+        "occupied": false,
+        "layout": "U-shaped",
+        "noiseLevel": "low",
+        "airConditioned": true,
+        "hasProjector": true,
+        "hasWhiteboard": true,
+        "hasPrinter": false,
+        "hasSoundSystem": true,
+        "wifiAccess": true,
+        "hasPhone": false,
+        "wheelchairAccessible": true,
+        "hasRefreshments": false
+    },
+    {
+        "id": 1,
+        "name": "War room",
+        "description": "A stylish and modern room suitable for executive meetings and strategic discussions, equipped with high-end technology.",
+        "img": "",
+        "capacity": 10,
+        "occupied": false,
+        "layout": "Boardroom",
+        "noiseLevel": "low",
+        "airConditioned": true,
+        "hasProjector": true,
+        "hasWhiteboard": true,
+        "hasPrinter": true,
+        "hasSoundSystem": true,
+        "wifiAccess": true,
+        "hasPhone": true,
+        "wheelchairAccessible": true,
+        "hasRefreshments": true
+    },
+    {
+        "id": 2,
+        "name": "Occupied room",
+        "description": "A flexible space currently in use, perfect for workshops and training sessions, equipped with modern AV technology.",
+        "img": "",
+        "capacity": 30,
+        "occupied": true,
+        "layout": "Classroom",
+        "noiseLevel": "medium",
+        "airConditioned": true,
+        "hasProjector": true,
+        "hasWhiteboard": true,
+        "hasPrinter": false,
+        "hasSoundSystem": true,
+        "wifiAccess": true,
+        "hasPhone": false,
+        "wheelchairAccessible": false,
+        "hasRefreshments": true
+    },
+    {
+        "id": 3,
+        "name": "Toilet",
+        "description": "A small, clean and well-maintained facility for personal hygiene.",
+        "img": "",
+        "capacity": 1,
+        "occupied": false,
+        "layout": "Single",
+        "noiseLevel": "low",
+        "airConditioned": false,
+        "hasProjector": false,
+        "hasWhiteboard": false,
+        "hasPrinter": false,
+        "hasSoundSystem": false,
+        "wifiAccess": false,
+        "hasPhone": false,
+        "wheelchairAccessible": true,
+        "hasRefreshments": false
+    }
+];
+
 // http://localhost:3000/rooms/:id
 // Full info about a room.
-export const roomFetcher = async (context) => {
-    return {
-        id: 0,
-        name: "Main room",
-        description: "A large, well-equipped space for presentations and conferences, featuring comfortable seating and audio-visual equipment.",
-        img: "",
-        capacity: 20,
-        occupied: false,
-        layout: "U-shaped",
-        noise_level: "low",
-        air_conditioned: true,
-        has_projector: true,
-        has_whiteboard: true,
-        has_printer: false,
-        has_sound_system: true,
-        wifi_access: true,
-        has_phone: false,
-        wheelchair_accessible: true,
-        has_refreshments: false
-    }
+export const roomFetcher = async (id) => {
+    return roomsDetailed[id] ?? null;
 };
 
 //http://localhost:3000/admin

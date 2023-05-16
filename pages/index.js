@@ -1,5 +1,5 @@
 import {Heading, Stack, Text} from "@chakra-ui/react";
-import SiteWrapper from "@/components/SiteWrapper";
+import SiteWrapper from "@/components/SiteWrapper/SiteWrapper";
 import MainButton from "@/components/MainButton";
 import {useUser} from "@auth0/nextjs-auth0/client";
 

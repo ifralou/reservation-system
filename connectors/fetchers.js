@@ -6,13 +6,11 @@ const buildGetFetcher = (obj) => {
     };
 }
 
-
 /**
  * Array of concise room info for the dashboard.
  * @returns {Promise<[RoomForDashBoard]>}
  */
 export const dashboardFetcher = buildGetFetcher(roomsForDashboard);
-
 
 /**
  * Specific info for a concrete rooms.
@@ -23,7 +21,6 @@ export const roomByIdInfoFetcher = async (roomId) => {
     return promisifyMockObject(roomsFull[roomId] ?? null);
 };
 
-
 /**
  *
  * @param userId
@@ -33,38 +30,34 @@ export const reservationsByUserFetcher = async(userId) => {
    return promisifyMockObject(reservations);
 }
 
-
 /**
  * Get all available buildings.
  * @type {function(): Promise<[Building]>}
  */
 export const buildingsFetcher = buildGetFetcher(buildings);
 
-
+/**
+ * Get all rooms in the building.
+ * @param buildingID
+ * @returns {Promise<[RoomFull]>}
+ */
 export const roomsByIdFetcher = async (buildingID) => {
     return promisifyMockObject(roomsFull);
 };
 
-export const getAllBuildings = async () => {
-   return buildings;
-}
+/**
+ * Send new state of features to the server.
+ * @param buildingId
+ * @param roomId
+ * @param features
+ * @returns {Promise<RoomFeatures>}
+ */
+export const roomEquipmentSendRefresh = async (buildingId, roomId, features) => {
+    console.log("Push to the BE. " + features);
+    return promisifyMockObject(features);
+};
 
-//http://localhost:3000/admin
-// Info for admin dashboard
-export const adminFetcher = async (context) => {
-    return {
-
-    }
-}
-
-// For purposes of user management
-export const userAdminFetcher = async (context) => {
-    return {
-
-    }
-}
-
-export const callBackend = async (url, callback, options) => {
+const callBackend = async (url, callback, options) => {
    fetch(url, {
        ...options,
        headers: {

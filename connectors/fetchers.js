@@ -1,4 +1,4 @@
-import {buildings, promisifyMockObject, roomsForDashboard, roomsFull} from "@/connectors/mocks";
+import {buildings, promisifyMockObject, reservations, roomsForDashboard, roomsFull} from "@/connectors/mocks";
 
 const buildGetFetcher = (obj) => {
     return async () => {
@@ -22,6 +22,16 @@ export const dashboardFetcher = buildGetFetcher(roomsForDashboard);
 export const roomByIdInfoFetcher = async (roomId) => {
     return promisifyMockObject(roomsFull[roomId] ?? null);
 };
+
+
+/**
+ *
+ * @param userId
+ * @returns {Promise<[UserReservation]>}
+ */
+export const reservationsByUserFetcher = async(userId) => {
+   return promisifyMockObject(reservations);
+}
 
 
 /**

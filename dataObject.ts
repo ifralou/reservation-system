@@ -53,8 +53,8 @@ type UserReservation = {
 }
 
 interface ReservationManagmentInterface {
-    reserveRoom(buildingId: number, roomId: number, userId: number, from: number, to: number): Boolean
-    getReservedRoomsByUserId(userId: number): [UserReservation]
+    reserveRoom(buildingId: number, roomId: number, userId: string, from: number, to: number): Boolean
+    getReservedRoomsByUserId(userId: string): [UserReservation]
     deleteRoomReservation(reservationId): boolean
 }
 

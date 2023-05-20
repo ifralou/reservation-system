@@ -95,3 +95,31 @@ export const buildings = [
     {id: 3, name: "Fuck you blya"},
 ];
 
+export const reservations = [
+    {
+        "reservationId": 1,
+        "roomName": "Main room",
+        "from": "2023-05-20T14:00:00.000Z",
+        "to": "2023-05-20T15:00:00.000Z"
+    },
+    {
+        "reservationId": 2,
+        "roomName": "War room",
+        "from": "2023-05-21T10:00:00.000Z",
+        "to": "2023-05-21T12:00:00.000Z"
+    },
+    {
+        "reservationId": 3,
+        "roomName": "Occupied room",
+        "from": "2023-05-22T08:00:00.000Z",
+        "to": "2023-05-22T09:00:00.000Z"
+    },
+    {
+        "reservationId": 4,
+        "roomName": "Toilet",
+        "from": "2023-05-23T11:00:00.000Z",
+        "to": "2023-05-23T12:00:00.000Z"
+    }
+];
+
+

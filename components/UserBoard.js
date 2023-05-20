@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Avatar,
     Button,
@@ -10,12 +10,21 @@ import {
     useDisclosure, VStack, Spinner
 } from "@chakra-ui/react";
 import {useUser} from "@auth0/nextjs-auth0/client";
+import {reservationsByUserFetcher} from "@/connectors/fetchers";
+import CurrentUserReservation from "@/components/CurrentUserReservation/CurrentUserReservation";
 
 const UserBoard = () => {
     const {isOpen, onOpen, onClose} = useDisclosure()
     const btnRef = React.useRef()
 
     const {user, isLoading} = useUser();
+
+    const [reservations, setReservations] = useState([]);
+
+    useEffect(() => {
+        reservationsByUserFetcher(user.email)
+            .then(res => setReservations(res));
+    }, []);
 
     const {
         email,
@@ -69,11 +78,11 @@ const UserBoard = () => {
                                 Reservations:
                             </Text>
                             <List>
-                                <ListItem>
-                                    None
-                                </ListItem>
                                 {
-                                    //TODO: render list of reservations
+                                    reservations.map(
+                                        reservation => <CurrentUserReservation key={reservation.id}
+                                                                               reservation={reservation}/>
+                                    )
                                 }
                             </List>
 

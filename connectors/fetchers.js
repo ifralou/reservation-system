@@ -1,7 +1,16 @@
-import {buildings, promisifyMockObject, reservations, roomsForDashboard, roomsFull} from "@/connectors/mocks";
-import {error} from "next/dist/build/output/log";
+import {
+   buildings,
+    promisifyMockObject,
+    reservations,
+    roomsForDashboard,
+    roomsFull
+} from "@/connectors/mocks";
 
-const buildGetFetcher = (obj) => {
+
+export const defaultFetcher = (...args) => fetch(...args).then(res => res.json());
+export const useApi = (url) => `/api/data/v1${url}`
+
+const buildGetFetcher = (obj, url) => {
     return async () => {
        return promisifyMockObject(obj);
     };
@@ -30,6 +39,7 @@ export const roomByIdInfoFetcher = async (roomId) => {
 export const reservationsByUserFetcher = async(userId) => {
    return promisifyMockObject(reservations);
 }
+
 
 /**
  * Get all available buildings.

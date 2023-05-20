@@ -1,28 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {Accordion, Input, Select, TabPanel, Text, VStack} from "@chakra-ui/react";
 import RoomAccordionItem from "@/components/RoomManagment/RoomAccordionItem";
-import {buildingsFetcher, roomsByIdFetcher} from "@/connectors/fetchers";
+import useBuildingData from "@/connectors/data-hooks/useBuildingData";
+import useRoomData, {NO_ROOMS_DEFAULT_DESCRIPTION} from "@/connectors/data-hooks/useRoomData";
 
 const RoomManagementTab = () => {
 
-    const [rooms, setRooms] = useState([]);
     const [roomNameSearch, setRoomNameSearch] = useState("");
-    const [buildingsSelectRange, setBuildingsSelectRange] = useState([]);
 
-    //Fetch data before component load;
-    useEffect(() => {
-        buildingsFetcher().then((res) => setBuildingsSelectRange(res) );
-    }, []);
+    const { buildingsSelectRange, buildingsSelectRangeStatus} = useBuildingData();
 
+    const [ currentBuildingId, setCurrentBuildingId ] = useState(0);
+
+    const { rooms, roomsStatus } = useRoomData(currentBuildingId);
 
     const handleSelect = (e) => {
         const buildingId = e.target.value;
-        if (buildingId !== "") {
-            roomsByIdFetcher()
-                .then(res => setRooms(res));
-        } else {
-            setRooms([]);
-        }
+        console.log("Id : " + buildingId)
+        setCurrentBuildingId(+buildingId);
     }
 
     const handleNameChange = (e) => {
@@ -41,9 +36,9 @@ const RoomManagementTab = () => {
                     placeholder="Search for room name here"
                 />
 
-                <Select placeholder={"Choose building"} onChange={handleSelect}>
+                <Select onChange={handleSelect}>
                     {
-                        buildingsSelectRange.map(
+                        !buildingsSelectRangeStatus.isLoading && buildingsSelectRange.map(
                             ({name, id}) => (<option value={id} key={id}>{name}</option>)
                         )
                     }
@@ -51,7 +46,7 @@ const RoomManagementTab = () => {
 
                 <Accordion w="100%">
                     {
-                        rooms.length === 0 ?
+                        roomsStatus.isLoading ?
                             <Text>No rooms here.</Text> :
                             rooms
                                 .filter(({id, name}) => name.includes(roomNameSearch))

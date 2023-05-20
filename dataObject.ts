@@ -1,9 +1,9 @@
-type RoomLayout = "u-shape" | "standard" //something else
+type RoomLayout = "U-shaped" | "Boardroom" | "Classroom" | "Single";
 
 type NoiseLevel = "low" | "standard" | "high";
 
 type RoomFeatures =
-    "conditioning" | "projector" | "white" | "printer" | "sound" | "wifi" | "phone" | "accessiblility" | "refreshment"
+    "conditioning" | "projector" | "whiteboard" | "printer" | "sound" | "wifi" | "phone" | "accessibility" | "refreshment"
 
 type RoomSlot = {
     from: Date,

@@ -41,6 +41,7 @@ type getRoomsForDashBoardResponse = {
 
 interface RoomManagmentInterface {
     getAllRoomsForDashboard(currentPageNumber: number): getRoomsForDashBoardResponse;
+    getAllRoomsForTheBuilding(buildingId: number): [RoomFull]
     getRoomFull(buildingId: number, roomId: number): RoomFull;
 }
 
@@ -67,5 +68,6 @@ interface AdminRoomManagment {
     getAllBuildings(): [ Building ]
     deleteBuilding(buildingId: number): boolean
     addBuilding(): boolean
+
     newEquipmentStateForTheRoom(buildingId: number, roomId: number, newRoomFeatures: [RoomFeatures]): [RoomFeatures]
 }

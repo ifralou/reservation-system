@@ -1,4 +1,5 @@
 import {buildings, promisifyMockObject, reservations, roomsForDashboard, roomsFull} from "@/connectors/mocks";
+import {error} from "next/dist/build/output/log";
 
 const buildGetFetcher = (obj) => {
     return async () => {
@@ -54,6 +55,7 @@ export const roomsByIdFetcher = async (buildingID) => {
  */
 export const roomEquipmentSendRefresh = async (buildingId, roomId, features) => {
     console.log("Push to the BE. " + features);
+    // return Promise.reject("POSHEL NAHUY")
     return promisifyMockObject(features);
 };
 

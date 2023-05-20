@@ -10,6 +10,7 @@ import {TfiBlackboard} from "react-icons/tfi";
 import {RiSurroundSoundLine} from "react-icons/ri";
 import {GrWheelchairActive} from "react-icons/gr";
 import {MdFastfood} from "react-icons/md";
+import {roomEquipmentSendRefresh} from "@/connectors/fetchers";
 
 function RoomAccordionItem({room}) {
     const [roomFeatures, setRoomFeatures] = useState(room.roomFeatures);
@@ -25,8 +26,7 @@ function RoomAccordionItem({room}) {
 
     const handleSaveButtonClick = () => {
         setIsLoading(true);
-        setTimeout(() => {
-            setIsLoading(false);
+        roomEquipmentSendRefresh(room.buildingId, room.id, roomFeatures).then((updatedFeatures) => {
             toast({
                 title: "Saved",
                 description: "Room features saved successfully.",
@@ -34,7 +34,19 @@ function RoomAccordionItem({room}) {
                 duration: 3000,
                 isClosable: true,
             });
-        }, 3000);
+            setRoomFeatures(updatedFeatures)
+        }).catch(() => {
+            console.log(room.roomFeatures);
+            toast({
+                title: "Failed",
+                description: "Error while saving new room features.",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+            setRoomFeatures(room.roomFeatures);
+        });
+        setIsLoading(false);
     };
 
     return (

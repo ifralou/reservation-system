@@ -11,7 +11,7 @@ const buildGetFetcher = (obj) => {
  * Array of concise room info for the dashboard.
  * @returns {Promise<[RoomForDashBoard]>}
  */
-export const dashBoardFetcher = buildGetFetcher(roomsForDashboard);
+export const dashboardFetcher = buildGetFetcher(roomsForDashboard);
 
 
 /**

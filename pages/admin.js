@@ -9,7 +9,7 @@ import {
     VStack
 } from "@chakra-ui/react";
 import SiteWrapper from "@/components/SiteWrapper/SiteWrapper";
-import RoomManagmentTab from "@/components/Admin/RoomManagmentTab";
+import RoomManagmentTab from "@/components/Admin/RoomManagementTab";
 import UserManagmentTab from "@/components/Admin/UserManagmentTab";
 
 

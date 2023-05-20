@@ -46,7 +46,7 @@ interface RoomManagmentInterface {
 }
 
 type UserReservation = {
-    reservationId: number,
+    id: number,
     roomName: string,
     from: Date,
     to: Date

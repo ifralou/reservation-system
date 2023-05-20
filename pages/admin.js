@@ -1,6 +1,19 @@
 import React from 'react';
-import {Flex, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, VStack} from "@chakra-ui/react";
+import {
+    Flex,
+    Heading,
+    Tab,
+    TabList,
+    TabPanels,
+    Tabs,
+    VStack
+} from "@chakra-ui/react";
 import SiteWrapper from "@/components/SiteWrapper/SiteWrapper";
+import RoomManagmentTab from "@/components/Admin/RoomManagmentTab";
+import UserManagmentTab from "@/components/Admin/UserManagmentTab";
+
+
+
 
 export default function Admin() {
 
@@ -11,21 +24,17 @@ export default function Admin() {
                     <Heading>Admin Dashboard</Heading>
                 </Flex>
 
+
                 <Tabs w="100%">
 
                     <TabList>
-                        <Tab>Rooms</Tab>
-                        <Tab>Users</Tab>
+                        <Tab>Room managment</Tab>
+                        <Tab>Pidornut Users</Tab>
                     </TabList>
 
                     <TabPanels>
-                        <TabPanel>
-                            Room managment things.
-                        </TabPanel>
-
-                        <TabPanel>
-                            User managment things.
-                        </TabPanel>
+                        <RoomManagmentTab/>
+                        <UserManagmentTab/>
                     </TabPanels>
 
                 </Tabs>

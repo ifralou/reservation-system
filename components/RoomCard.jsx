@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Card, CardBody, CardFooter, Text, Heading, Stack, Image} from "@chakra-ui/react";
 import Link from "next/link";
 
@@ -11,6 +11,7 @@ import Link from "next/link";
  */
 const RoomCard = ({room}) => {
     const {id, name, description, img, capacity, occupied} = room;
+
 
     return (
         <Link href={`/rooms/${id}`}>

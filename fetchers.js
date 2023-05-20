@@ -1,5 +1,7 @@
 // (context) => {}
 
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
+
 /**
  * Concise room information for the dashboard.
  * @param content
@@ -47,8 +49,9 @@ const roomsDetailed = [
         "name": "Main room",
         "description": "A large, well-equipped space for presentations and conferences, featuring comfortable seating and audio-visual equipment.",
         "img": "",
-        "capacity": 20,
         "occupied": false,
+
+        "capacity": 20,
         "layout": "U-shaped",
         "noiseLevel": "low",
         "airConditioned": true,
@@ -139,4 +142,13 @@ export const userAdminFetcher = async (context) => {
     return {
 
     }
+}
+
+export const callBackend = async (url, callback, options) => {
+   fetch(url, {
+       ...options,
+       headers: {
+          "X-API-KEY" : process.env.BE_API_KEY
+       }
+   })
 }

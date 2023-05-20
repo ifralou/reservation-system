@@ -3,7 +3,7 @@ import {useUser } from '@auth0/nextjs-auth0/client';
 import { Grid, GridItem } from "@chakra-ui/react";
 import RoomCard from "@/components/RoomCard";
 import SiteWrapper from "@/components/SiteWrapper/SiteWrapper";
-import {dashboardFetcher} from "@/fetchers";
+import {dashboardFetcher} from "@/connectors/fetchers";
 import Loader from "@/components/Loader/Loader";
 
 

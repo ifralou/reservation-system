@@ -1,30 +1,25 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Accordion, Input, Select, TabPanel, Text, VStack} from "@chakra-ui/react";
 import RoomAccordionItem from "@/components/RoomManagment/RoomAccordionItem";
-
-
-const buildings = [
-    {name: "CVUT", id: 0},
-    {name: "YOUR MOM", id: 1},
-    {name: "TOILET", id: 2}
-]
+import {buildingsFetcher, roomsByIdFetcher} from "@/connectors/fetchers";
 
 const RoomManagementTab = () => {
 
     const [rooms, setRooms] = useState([]);
     const [roomNameSearch, setRoomNameSearch] = useState("");
+    const [buildingsSelectRange, setBuildingsSelectRange] = useState([]);
 
-    const fetchRooms = () => {
-        setRooms([
-            {id: 0, name: "Room number one"},
-            {id: 1, name: "Room number two"}
-        ]);
-    };
+    //Fetch data before component load;
+    useEffect(() => {
+        buildingsFetcher().then((res) => setBuildingsSelectRange(res) );
+    }, []);
+
 
     const handleSelect = (e) => {
         const buildingId = e.target.value;
         if (buildingId !== "") {
-            fetchRooms();
+            roomsByIdFetcher()
+                .then(res => setRooms(res));
         } else {
             setRooms([]);
         }
@@ -48,7 +43,9 @@ const RoomManagementTab = () => {
 
                 <Select placeholder={"Choose building"} onChange={handleSelect}>
                     {
-                        buildings.map(({name, id}) => (<option value={id} key={id}>{name}</option>))
+                        buildingsSelectRange.map(
+                            ({name, id}) => (<option value={id} key={id}>{name}</option>)
+                        )
                     }
                 </Select>
 
@@ -58,7 +55,7 @@ const RoomManagementTab = () => {
                             <Text>No rooms here.</Text> :
                             rooms
                                 .filter(({id, name}) => name.includes(roomNameSearch))
-                                .map(({id, name}) => <RoomAccordionItem key={id} name={name}/>)
+                                .map((room) => <RoomAccordionItem key={room.id} room={room}/>)
                     }
                 </Accordion>
 

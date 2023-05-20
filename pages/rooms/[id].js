@@ -1,8 +1,10 @@
 import React from 'react';
 import SiteWrapper from "@/components/SiteWrapper/SiteWrapper";
-import { roomFetcher } from "@/fetchers";
+import {roomByIdInfoFetcher} from "@/connectors/fetchers";
 import RoomEmpty from "@/components/RoomCardDetailed/RoomEmpty";
 import RoomCardDetailed from "@/components/RoomCardDetailed/RoomCardDetailed";
+
+//localhost:3000/rooms/1
 
 export default function RoomOverview({room}) {
     return (
@@ -17,7 +19,7 @@ export default function RoomOverview({room}) {
 export async function getServerSideProps(context) {
     return {
         props: {
-            room: await roomFetcher(context.query.id)
+            room: await roomByIdInfoFetcher(context.query.id)
         }
     }
 }

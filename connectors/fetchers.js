@@ -57,6 +57,12 @@ export const roomEquipmentSendRefresh = async (buildingId, roomId, features) => 
     return promisifyMockObject(features);
 };
 
+export const cancelReservationSend = async (reservationId) => {
+    console.log("Push to the BE. " + reservationId);
+    // return Promise.reject("POSHEL NAHUY")
+    return promisifyMockObject(reservationId);
+}
+
 const callBackend = async (url, callback, options) => {
    fetch(url, {
        ...options,

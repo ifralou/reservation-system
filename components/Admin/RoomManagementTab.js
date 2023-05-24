@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Accordion, Input, Select, TabPanel, Text, VStack} from "@chakra-ui/react";
 import RoomAccordionItem from "@/components/RoomManagment/RoomAccordionItem";
 import useBuildingData from "@/connectors/data-hooks/useBuildingData";
-import useRoomData, {NO_ROOMS_DEFAULT_DESCRIPTION} from "@/connectors/data-hooks/useRoomData";
+import useRoomsData from "@/connectors/data-hooks/useRoomsData";
 
 const RoomManagementTab = () => {
 
@@ -12,7 +12,7 @@ const RoomManagementTab = () => {
 
     const [ currentBuildingId, setCurrentBuildingId ] = useState(0);
 
-    const { rooms, roomsStatus } = useRoomData(currentBuildingId);
+    const { rooms, roomsStatus } = useRoomsData(currentBuildingId);
 
     const handleSelect = (e) => {
         const buildingId = e.target.value;

@@ -1,5 +1,4 @@
-import {buildings, roomsForDashboard, roomsFull} from "@/connectors/mocks";
-import {useRouter} from "next/router";
+import {roomsFull} from "@/connectors/mocks";
 
 export default function handler(req, res) {
     const {buildingId} = req.query;

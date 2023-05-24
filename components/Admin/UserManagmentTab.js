@@ -4,7 +4,7 @@ import {TabPanel} from "@chakra-ui/react";
 const UserManagementTab = () => {
     return (
         <TabPanel>
-            Blyadina yobanaya
+            Test Test
         </TabPanel>
     );
 };

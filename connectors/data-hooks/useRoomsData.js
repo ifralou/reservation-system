@@ -2,7 +2,7 @@ import React from 'react';
 import useSWR from "swr";
 import {defaultFetcher, useApi} from "@/connectors/fetchers";
 
-const useRoomData = (
+const useRoomsData = (
    buildingId
 ) => {
     let url = "/rooms";
@@ -21,4 +21,4 @@ const useRoomData = (
     return {rooms: data, roomsStatus: {error, isLoading}};
 };
 
-export default useRoomData;
+export default useRoomsData;

@@ -64,16 +64,13 @@ export const roomsByIdFetcher = async (buildingID) => {
  * @returns {Promise<RoomFeatures>}
  */
 export const roomEquipmentSendRefresh = async (buildingId, roomId, features) => {
-    console.log("Push to the BE. " + features);
-    // return Promise.reject("POSHEL NAHUY")
-    return promisifyMockObject(features);
+    const resp = await fetch(useApi("/room/equipment"), {
+        method: "POST",
+        body: JSON.stringify({buildingId, roomId, features})
+    });
+    const body = await resp.json();
+    console.log("Request from body");
+    console.log(body);
+    return body.features;
 };
 
-const callBackend = async (url, callback, options) => {
-   fetch(url, {
-       ...options,
-       headers: {
-          "X-API-KEY" : process.env.BE_API_KEY
-       }
-   })
-}

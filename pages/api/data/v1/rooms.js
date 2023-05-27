@@ -8,5 +8,4 @@ export default function handler(req, res) {
     } else {
         res.status(200).json([])
     }
-
 }

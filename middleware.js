@@ -24,6 +24,6 @@ export const config = {
         "/dashboard",
         "/admin",
         "/rooms/:id*",
-        "/api/data/v1/:path*",
+        //"/api/data/v1/:path*",
     ]
 }

@@ -147,8 +147,6 @@ const RoomCardDetailed = ({room}) => {
             
 
             <CardBody >
-                {/* <Code children={JSON.stringify(room, null, "\t")}>
-                </Code> */}
 
                 <List spacing={3}>
                     

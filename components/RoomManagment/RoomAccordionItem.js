@@ -27,7 +27,6 @@ function RoomAccordionItem({room}) {
     const handleSaveButtonClick = () => {
         setIsLoading(true);
         roomEquipmentSendRefresh(room.buildingId, room.id, roomFeatures).then((updatedFeatures) => {
-            console.log("Features in equipment" + updatedFeatures);
             toast({
                 title: "Saved",
                 description: "Room features saved successfully.",

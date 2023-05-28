@@ -36,7 +36,7 @@ const RoomManagementTab = () => {
                     placeholder="Search for room name here"
                 />
 
-                <Select onChange={handleSelect}>
+                <Select placeholder={"Choose building"} onChange={handleSelect}>
                     {
                         !buildingsSelectRangeStatus.isLoading && buildingsSelectRange.map(
                             ({name, id}) => (<option value={id} key={id}>{name}</option>)
@@ -46,6 +46,7 @@ const RoomManagementTab = () => {
 
                 <Accordion w="100%">
                     {
+
                         roomsStatus.isLoading ?
                             <Text>No rooms here.</Text> :
                             rooms

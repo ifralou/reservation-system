@@ -1,3 +1,4 @@
+import {error} from "next/dist/build/output/log";
 import {
    buildings,
     promisifyMockObject,
@@ -5,7 +6,6 @@ import {
     roomsForDashboard,
     roomsFull
 } from "@/connectors/mocks";
-
 
 export const defaultFetcher = (...args) => fetch(...args).then(res => res.json());
 export const useApi = (url) => `/api/data/v1${url}`
@@ -40,7 +40,6 @@ export const reservationsByUserFetcher = async(userId) => {
    return promisifyMockObject(reservations);
 }
 
-
 /**
  * Get all available buildings.
  * @type {function(): Promise<[Building]>}
@@ -74,3 +73,17 @@ export const roomEquipmentSendRefresh = async (buildingId, roomId, features) => 
     return body.features;
 };
 
+export const cancelReservationSend = async (reservationId) => {
+    console.log("Push to the BE. " + reservationId);
+    // return Promise.reject("POSHEL NAHUY")
+    return promisifyMockObject(reservationId);
+}
+
+const callBackend = async (url, callback, options) => {
+   fetch(url, {
+       ...options,
+       headers: {
+          "X-API-KEY" : process.env.BE_API_KEY
+       }
+   })
+}

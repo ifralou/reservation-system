@@ -2,10 +2,10 @@ import React from 'react';
 import Link from "next/link";
 import {Button} from "@chakra-ui/react";
 
-const MainButton = ({href, children}) => {
+const MainButton = ({isActive, href, children, variant }) => {
     return (
         <Link href={href}>
-            <Button colorScheme="green" size={"lg"}>
+            <Button isActive={isActive} colorScheme="green" size={"lg"} variant={variant}>
                 {...children}
             </Button>
         </Link>

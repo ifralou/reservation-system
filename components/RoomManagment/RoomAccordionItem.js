@@ -36,7 +36,6 @@ function RoomAccordionItem({room}) {
             });
             setRoomFeatures(updatedFeatures)
         }).catch(() => {
-            console.log(room.roomFeatures);
             toast({
                 title: "Failed",
                 description: "Error while saving new room features.",

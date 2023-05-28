@@ -13,12 +13,17 @@ export default withMiddlewareAuthRequired(async function (req) {
         )
     }
 
+    if(req.url.includes("api")) {
+
+    }
+
 });
 
 export const config = {
     matcher: [
         "/dashboard",
         "/admin",
-        "/rooms/:id*"
+        "/rooms/:id*",
+        "/api/data/v1/:path*",
     ]
 }

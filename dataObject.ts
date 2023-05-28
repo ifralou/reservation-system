@@ -5,6 +5,9 @@ type NoiseLevel = "low" | "standard" | "high";
 type RoomFeatures =
     "conditioning" | "projector" | "whiteboard" | "printer" | "sound" | "wifi" | "phone" | "accessibility" | "refreshment"
 
+type Recurrent =
+    "day" | "week" | "month" | "year"
+
 type RoomSlot = {
     from: Date,
     to: Date
@@ -39,6 +42,8 @@ type getRoomsForDashBoardResponse = {
     totalPages: number
 };
 
+
+// Ready
 interface RoomManagmentInterface {
     getAllRoomsForDashboard(currentPageNumber: number): getRoomsForDashBoardResponse;
     getAllRoomsForTheBuilding(buildingId: number): [RoomFull]
@@ -52,10 +57,17 @@ type UserReservation = {
     to: Date
 }
 
+//TODO
 interface ReservationManagmentInterface {
-    reserveRoom(buildingId: number, roomId: number, userId: string, from: number, to: number): Boolean
+    reserveRoom(
+        buildingId: number,
+        roomId: number,
+        userId: string,
+        from: number, to: number,
+        recurrent: Recurrent
+    ): Boolean
     getReservedRoomsByUserId(userId: string): [UserReservation]
-    deleteRoomReservation(reservationId): boolean
+    deleteRoomReservation(reservationId: number): boolean
 }
 
 type Building = {
@@ -63,11 +75,7 @@ type Building = {
     name: string
 }
 
-
 interface AdminRoomManagment {
     getAllBuildings(): [ Building ]
-    deleteBuilding(buildingId: number): boolean
-    addBuilding(): boolean
-
     newEquipmentStateForTheRoom(buildingId: number, roomId: number, newRoomFeatures: [RoomFeatures]): [RoomFeatures]
 }

@@ -9,7 +9,7 @@ import {
     Input, InputGroup, InputRightElement,
     Select, Spacer,
     Text,
-    useToast
+    useToast, VStack
 } from "@chakra-ui/react";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
@@ -255,7 +255,9 @@ const RoomCardDetailed = ({room}) => {
                                 width="100%"
                             />
                         </FormControl>
-                        <Spacer height="2"/>
+                        <Spacer height="4"/>
+                        <HStack>
+
                         <FormControl>
                             <FormLabel>From</FormLabel>
                             <Select
@@ -281,6 +283,8 @@ const RoomCardDetailed = ({room}) => {
                                 {generateTimeSlots(false)}
                             </Select>
                         </FormControl>
+
+                        </HStack>
                         <Flex justifyContent="center">
                             <Button
                                 colorScheme="green"

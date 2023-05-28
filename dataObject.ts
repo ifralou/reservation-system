@@ -1,6 +1,6 @@
 type RoomLayout = "U-shaped" | "Boardroom" | "Classroom" | "Single";
 
-type NoiseLevel = "low" | "standard" | "high";
+type NoiseLevel = "Low" | "Medium" | "High";
 
 type RoomFeatures =
     "conditioning" | "projector" | "whiteboard" | "printer" | "sound" | "wifi" | "phone" | "accessibility" | "refreshment"

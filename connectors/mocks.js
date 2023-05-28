@@ -46,7 +46,7 @@ export const roomsFull = [
         "occupiedNow": false,
         "capacity": 20,
         "layout": "U-shaped",
-        "noiseLevel": "low",
+        "noiseLevel": "Low",
         "roomFeatures": ["conditioning", "projector", "whiteboard", "sound", "wifi", "accessibility"]
     },
     {
@@ -58,7 +58,7 @@ export const roomsFull = [
         "occupiedNow": false,
         "capacity": 10,
         "layout": "Boardroom",
-        "noiseLevel": "low",
+        "noiseLevel": "Low",
         "roomFeatures": ["conditioning", "projector", "whiteboard", "printer", "sound", "wifi", "phone", "accessibility", "refreshment"]
     },
     {
@@ -70,7 +70,7 @@ export const roomsFull = [
         "occupiedNow": true,
         "capacity": 30,
         "layout": "Classroom",
-        "noiseLevel": "medium",
+        "noiseLevel": "Medium",
         "roomFeatures": ["conditioning", "projector", "whiteboard", "sound", "wifi", "refreshment"]
     },
     {
@@ -82,7 +82,7 @@ export const roomsFull = [
         "occupiedNow": false,
         "capacity": 1,
         "layout": "Single",
-        "noiseLevel": "low",
+        "noiseLevel": "Low",
         "roomFeatures": ["accessibility"]
     }
 ]

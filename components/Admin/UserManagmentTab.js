@@ -8,8 +8,18 @@ import {
     AccordionItem,
     HStack,
     AccordionIcon,
-    AccordionButton, AccordionPanel, ListItem, Box
+    AccordionButton,
+    AccordionPanel,
+    ListItem,
+    Box,
+    Popover,
+    PopoverTrigger,
+    Button,
+    PopoverContent,
+    PopoverArrow,
+    PopoverCloseButton, PopoverHeader, PopoverBody, VStack, Input
 } from "@chakra-ui/react";
+import DeleteFlow from "@/components/Admin/DeleteFlow/DeleteFlow";
 
 const UserManagementTab = () => {
     const [users, setUsers] = useState({});
@@ -48,6 +58,8 @@ const UserManagementTab = () => {
                                     <ListItem>
                                         Count of logins: {user.count}
                                     </ListItem>
+
+                                    <DeleteFlow deleteControl={user.name} deleteAction={() => console.log("deleted")}/>
                                 </List>
                             </AccordionPanel>
                         </AccordionItem>

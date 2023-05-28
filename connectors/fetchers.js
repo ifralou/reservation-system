@@ -1,11 +1,5 @@
 import {error} from "next/dist/build/output/log";
-import {
-   buildings,
-    promisifyMockObject,
-    reservations,
-    roomsForDashboard,
-    roomsFull
-} from "@/connectors/mocks";
+import {buildings, promisifyMockObject, reservations, roomsForDashboard, roomsFull} from "@/connectors/mocks";
 
 export const defaultFetcher = (...args) => fetch(...args).then(res => res.json());
 export const useApi = (url) => `/api/data/v1${url}`
@@ -86,4 +80,15 @@ const callBackend = async (url, callback, options) => {
           "X-API-KEY" : process.env.BE_API_KEY
        }
    })
+}
+
+export const fetchExistingReservations = async(date) => {
+    const reservedSlots = ["16:00", "16:15", "16:30"];
+    return promisifyMockObject(reservedSlots);
+}
+
+export const sendSaveReservation = async(date, startTime, endTime) => {
+    const reservationId = 10;
+    // return Promise.reject("POSHEL NAHUY")
+    return promisifyMockObject(reservationId);
 }

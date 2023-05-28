@@ -1,19 +1,18 @@
 import React, {useState} from 'react';
 import {
+    Button,
     Card,
     CardBody,
-    CardFooter,
-    CardHeader,
-    Flex,
+    Flex, FormControl, FormLabel,
     Heading,
-    HStack,
-    Select, 
-    List,
-    ListItem, 
-    ListIcon, 
+    HStack, Icon,
+    Input, InputGroup, InputRightElement,
+    Select, Spacer,
     Text,
-    Box
+    useToast
 } from "@chakra-ui/react";
+import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css";
 import {BsProjector} from "react-icons/bs";
 import {TfiBlackboard} from "react-icons/tfi";
 import {AiOutlinePhone, AiOutlinePrinter, AiOutlineWifi} from "react-icons/ai";
@@ -22,97 +21,130 @@ import {GrWheelchairActive} from "react-icons/gr";
 import {MdFastfood} from "react-icons/md";
 import TooltipIcon from "@/components/RoomCardDetailed/TooltipIcon";
 import {TbAirConditioning} from "react-icons/tb";
-import MainButton from "@/components/MainButton";
-import { Divider } from '@chakra-ui/react'
-import { MdCheckCircle } from 'react-icons/md'
-
-const checkNoiseLevel = (noiseLevel) => {
-    return noiseLevel == "low" ? "red" : "green"; 
-}
+import {fetchExistingReservations, sendSaveReservation} from "@/connectors/fetchers";
+import {FaAngleDown} from "react-icons/fa";
 
 const RoomCardDetailed = ({room}) => {
+    const [date, setDate] = useState(null);
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+    const [reservedTimeSlots, setReservedTimeSlots] = useState([]);
+    const toast = useToast();
 
-    const timeStart = [
-        {label: "Select start time", value: 0},
-        {label: "8:00", value: 1},
-        {label: "8:15", value: 2},
-        {label: "8:30", value: 3},
-        {label: "8:45", value: 4},
-        {label: "9:00", value: 5},
-        {label: "9:15", value: 6},
-        {label: "9:30", value: 7},
-        {label: "9:45", value: 8},
-        {label: "10:00", value: 9},
-        {label: "10:15", value: 10},
-        {label: "10:30", value: 11},
-        {label: "10:45", value: 12},
-        {label: "11:00", value: 13},
-        {label: "11:15", value: 14},
-        {label: "11:30", value: 15},
-        {label: "11:45", value: 16},
-        {label: "12:00", value: 17},
-        {label: "12:15", value: 18},
-        {label: "12:30", value: 19},
-        {label: "12:45", value: 20},
-        {label: "13:00", value: 21},
-        {label: "13:15", value: 22},
-        {label: "13:30", value: 23},
-        {label: "13:45", value: 24},
-        {label: "14:00", value: 25},
-        {label: "14:15", value: 26},
-        {label: "14:30", value: 27},
-        {label: "14:45", value: 28},
-        {label: "15:00", value: 29},
-        {label: "15:15", value: 30},
-        {label: "15:30", value: 31},
-        {label: "15:45", value: 32},
-        {label: "16:00", value: 33},
-        {label: "16:15", value: 34},
-        {label: "16:30", value: 35},
-        {label: "16:45", value: 36},
-    ]
+    const minSelectableDate = new Date(); // minimal selectable date is today
 
-    const timeEnd = [
-        {label: "Select end time", value: 0},
-        {label: "8:00", value: 1},
-        {label: "8:15", value: 2},
-        {label: "8:30", value: 3},
-        {label: "8:45", value: 4},
-        {label: "9:00", value: 5},
-        {label: "9:15", value: 6},
-        {label: "9:30", value: 7},
-        {label: "9:45", value: 8},
-        {label: "10:00", value: 9},
-        {label: "10:15", value: 10},
-        {label: "10:30", value: 11},
-        {label: "10:45", value: 12},
-        {label: "11:00", value: 13},
-        {label: "11:15", value: 14},
-        {label: "11:30", value: 15},
-        {label: "11:45", value: 16},
-        {label: "12:00", value: 17},
-        {label: "12:15", value: 18},
-        {label: "12:30", value: 19},
-        {label: "12:45", value: 20},
-        {label: "13:00", value: 21},
-        {label: "13:15", value: 22},
-        {label: "13:30", value: 23},
-        {label: "13:45", value: 24},
-        {label: "14:00", value: 25},
-        {label: "14:15", value: 26},
-        {label: "14:30", value: 27},
-        {label: "14:45", value: 28},
-        {label: "15:00", value: 29},
-        {label: "15:15", value: 30},
-        {label: "15:30", value: 31},
-        {label: "15:45", value: 32},
-        {label: "16:00", value: 33},
-        {label: "16:15", value: 34},
-        {label: "16:30", value: 35},
-        {label: "16:45", value: 36},
-    ]
+    const handleCreateReservation = (date, start, end) => {
+        sendSaveReservation(date, start, end).then(() => {
+            toast({
+                title: "Saved",
+                description: "Reservation created successfully.",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+            })
+        }).catch(() => {
+            toast({
+                title: "Failed",
+                description: "Error while creating the reservation.",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        })
+    }
 
-    const [startTime, setStartTime] = React.useState(null);
+    const handleDateChange = (date) => {
+        setDate(date);
+        fetchExistingReservations(date).then((takenSlots) => {
+            setReservedTimeSlots(takenSlots);
+        }).catch(() => {
+            toast({
+                title: "Failed",
+                description: "Error while fetching existing reservations.",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        })
+    };
+
+    const handleStartTimeChange = (event) => {
+        setStartTime(event.target.value);
+    };
+
+    const handleEndTimeChange = (event) => {
+        setEndTime(event.target.value);
+    };
+
+    const endTimeLaterThanStart = (endString, startString) => {
+        return new Date(`1970-01-01T${endString}`) > new Date(`1970-01-01T${startString}`)
+    }
+
+    const generateTimeSlots = (forStartTime) => {
+        const timeSlots = [];
+
+        let currentTime = new Date();
+        currentTime.setHours(8, 0, 0, 0);
+        const endTime = new Date();
+        endTime.setHours(20, 0, 0, 0);
+
+        while (currentTime <= endTime) {
+            const timeString = currentTime.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+            });
+
+            // If generating start time slots, add everything except reserved slots
+            if (forStartTime && !reservedTimeSlots.includes(timeString)) {
+                timeSlots.push(
+                    <option key={timeString} value={timeString}>
+                        {timeString}
+                    </option>
+                );
+            }
+
+            // If generating end time slots, it should be:
+            // 1. Later than start
+            // 2. Not later than the closest existing reservation
+            if (!forStartTime && endTimeLaterThanStart(timeString, startTime)) {
+                if (reservedTimeSlots.includes(timeString)) {
+                    break;
+                }
+
+                timeSlots.push(
+                    <option key={timeString} value={timeString}>
+                        {timeString}
+                    </option>
+                );
+            }
+
+            currentTime.setMinutes(currentTime.getMinutes() + 15);
+        }
+
+        return timeSlots;
+    };
+
+    const CustomDatePickerInput = React.forwardRef(({value, onClick}, ref) => (
+        <InputGroup>
+            <Input
+                value={value}
+                onClick={onClick}
+                ref={ref}
+                placeholder="Select Date"
+                readOnly
+                bg="white"
+                borderWidth="1px"
+                borderColor="gray.200"
+                _hover={{borderColor: "gray.400"}}
+                _focus={{outline: "none", boxShadow: "outline"}}
+                cursor="pointer"
+                paddingRight="2.5rem" // Adjust the padding here
+            />
+            <InputRightElement pointerEvents="none" top="50%" transform="translateY(-50%)">
+                <Icon as={FaAngleDown} color="gray.500"/>
+            </InputRightElement>
+        </InputGroup>
+    ));
 
     let {
         id, buildingId,
@@ -122,122 +154,146 @@ const RoomCardDetailed = ({room}) => {
     } = room;
 
     return (
-        <Card w="100%">
-            <CardHeader>
-                <Flex align="center" justify="space-between">
+        <Card width="100%">
+            <CardBody>
+                <Heading size="2xl" paddingBottom="4" textAlign="center">
+                    {name}
+                </Heading>
 
-                    <Heading>{name}</Heading>
+                <Text mt={5} fontSize='xl' paddingBottom='4' fontStyle='italic'>{description}</Text>
 
-                    <HStack>
-                        <TooltipIcon active={true} textTooltip={"Air condition"} icon={TbAirConditioning}/>
-                        <TooltipIcon active={true} textTooltip={"Projector"} icon={BsProjector}/>
-                        <TooltipIcon active={false} textTooltip={"Phone"} icon={AiOutlinePhone}/>
-                        <TooltipIcon active={false} textTooltip={"White board"} icon={TfiBlackboard}/>
-                        <TooltipIcon active={true} textTooltip={"Printer"} icon={AiOutlinePrinter}/>
-                        <TooltipIcon active={true} textTooltip={"Sound system"} icon={RiSurroundSoundLine}/>
-                        <TooltipIcon active={true} textTooltip={"Wifi"} icon={AiOutlineWifi}/>
-                        <TooltipIcon active={false} textTooltip={"Wheel chair"}
-                                     icon={GrWheelchairActive}/>
-                        <TooltipIcon active={false} textTooltip={"Refreshments"} icon={MdFastfood}/>
+                <HStack justify='space-between'>
+                    <HStack spacing={5}>
+                        <Flex direction="column" align="center">
+                            <Text fontSize="lg" textAlign="center">
+                                <Text fontSize="lg" as="span" fontWeight="bold">Capacity:</Text>{" "}{capacity}
+                            </Text>
+                        </Flex>
+                        <Flex direction="column" align="center">
+                            <Text fontSize="lg" textAlign="center">
+                                <Text fontSize="lg" as="span" fontWeight="bold">Layout:</Text>{" "}{layout}
+                            </Text>
+                        </Flex>
+                        <Flex direction="column" align="center">
+                            <Text fontSize="lg" textAlign="center">
+                                <Text fontSize="lg" as="span" fontWeight="bold">Noise Level:</Text>{" "}{noiseLevel}
+                            </Text>
+                        </Flex>
                     </HStack>
 
-                </Flex>
-            </CardHeader>
+                    <Flex wrap="wrap" align="start">
+                        <TooltipIcon
+                            active={roomFeatures.includes("conditioning")}
+                            textTooltip="Air Condition"
+                            icon={TbAirConditioning}
+                            margin={2}
+                        />
+                        <TooltipIcon
+                            active={roomFeatures.includes("projector")}
+                            textTooltip="Projector"
+                            icon={BsProjector}
+                            margin={2}
+                        />
+                        <TooltipIcon
+                            active={roomFeatures.includes("phone")}
+                            textTooltip="Phone"
+                            icon={AiOutlinePhone}
+                            margin={2}
+                        />
+                        <TooltipIcon
+                            active={roomFeatures.includes("white")}
+                            textTooltip="Whiteboard"
+                            icon={TfiBlackboard}
+                            margin={2}
+                        />
+                        <TooltipIcon
+                            active={roomFeatures.includes("printer")}
+                            textTooltip="Printer"
+                            icon={AiOutlinePrinter}
+                            margin={2}
+                        />
+                        <TooltipIcon
+                            active={roomFeatures.includes("sound")}
+                            textTooltip="Sound System"
+                            icon={RiSurroundSoundLine}
+                            margin={2}
+                        />
+                        <TooltipIcon
+                            active={roomFeatures.includes("wifi")}
+                            textTooltip="Wi-Fi"
+                            icon={AiOutlineWifi}
+                            margin={2}
+                        />
+                        <TooltipIcon
+                            active={roomFeatures.includes("accessibility")}
+                            textTooltip="Wheelchair Accessible"
+                            icon={GrWheelchairActive}
+                            margin={2}
+                        />
+                        <TooltipIcon
+                            active={roomFeatures.includes("refreshment")}
+                            textTooltip="Refreshments"
+                            icon={MdFastfood}
+                            margin={2}
+                        />
+                    </Flex>
+                </HStack>
 
-            
+                <Card width="100%">
+                    <CardBody>
+                        <Heading size="lg" paddingBottom="4">
+                            Make Reservation
+                        </Heading>
+                        <FormControl>
+                            <FormLabel>Date</FormLabel>
+                            <DatePicker
+                                selected={date}
+                                onChange={handleDateChange}
+                                dateFormat="MMMM d, yyyy"
+                                customInput={<CustomDatePickerInput/>}
+                                minDate={minSelectableDate}
+                                width="100%"
+                            />
+                        </FormControl>
+                        <Spacer height="2"/>
+                        <FormControl>
+                            <FormLabel>From</FormLabel>
+                            <Select
+                                value={startTime}
+                                onChange={handleStartTimeChange}
+                                placeholder="Select Start Time"
+                                isDisabled={!date}
+                                width="100%"
+                            >
+                                {generateTimeSlots(true)}
+                            </Select>
+                        </FormControl>
+                        <Spacer height="2"/>
+                        <FormControl>
+                            <FormLabel>To</FormLabel>
+                            <Select
+                                value={endTime}
+                                onChange={handleEndTimeChange}
+                                placeholder="Select End Time"
+                                isDisabled={!date || !startTime}
+                                width="100%"
+                            >
+                                {generateTimeSlots(false)}
+                            </Select>
+                        </FormControl>
+                        <Flex justifyContent="center">
+                            <Button
+                                colorScheme="green"
+                                marginTop="4"
+                                onClick={() => handleCreateReservation(date, startTime, endTime)}
+                            >
+                                Create
+                            </Button>
+                        </Flex>
 
-            <CardBody >
-
-                <List spacing={3}>
-                    
-                    <HStack align="center" justify="space-around">
-                        <ListItem>
-                            <ListIcon as={MdCheckCircle}  color='green.500' />
-                            Room ID: {id}
-                        </ListItem>
-
-                        <ListItem>
-                            <ListIcon as={MdCheckCircle}  color='green.500' />
-                            Building ID: {buildingId}
-                        </ListItem>
-                    </HStack>
-                    
-                    <HStack align="center"  justify="space-around">
-                        <ListItem>
-                            <ListIcon as={MdCheckCircle}  color='green.500' />
-                            Name: {name}
-                        </ListItem>
-                    
-                        <ListItem>
-                            <ListIcon as={MdCheckCircle} color='green.500' />
-                            Capacity: {capacity}
-                        </ListItem>
-
-                    </HStack>
-
-
-                    <HStack align="center"  justify="space-around">
-                        <ListItem>
-                            <ListIcon as={MdCheckCircle} color='green.500' />
-                            Layout: {layout}
-                        </ListItem>
-
-                        <ListItem >                            
-                            <ListIcon as={MdCheckCircle} color='green.500' />
-                            Noise Level: <Text as="span" color={checkNoiseLevel(noiseLevel)}>{noiseLevel}</Text>
-                        </ListItem>
-
-                    </HStack>
-
-                    <Divider orientation='horizontal' />
-                    
-                    <ListItem>
-                        <ListIcon as={MdCheckCircle} color='green.500' />
-                        Description: {description}
-                    </ListItem>
-
-                    <Divider orientation='horizontal' />
-
-                    <ListItem>
-                        <ListIcon as={MdCheckCircle} color='green.500' />
-                        Image Room: {img}
-                    </ListItem>
-
-                    <Divider orientation='horizontal' />
-
-                    <ListItem>
-                        <ListIcon as={MdCheckCircle} color='green.500' />
-                        Features: {roomFeatures}
-                    </ListItem>
-
-
-                </List>
-
-                
-
-                <Flex mt={5} justify="space-between" >
-                <Select>
-                    {timeStart.map((option) => (
-                        <option key={option.value} value={option.value}>
-                        {option.label}
-                        </option>
-                    ))}
-                </Select>
-                <Select>
-                    {timeEnd.map((option) => (
-                        <option key={option.value} value={option.value}>
-                        {option.label}
-                        </option>
-                    ))}
-                </Select>
-            
-                </Flex>
+                    </CardBody>
+                </Card>
             </CardBody>
-
-            <CardFooter>
-                <MainButton href="/">Reserve</MainButton>
-            </CardFooter>
-            
         </Card>
     );
 };

@@ -9,7 +9,7 @@ import {
     PopoverTrigger, VStack
 } from "@chakra-ui/react";
 
-const DeleteFlow = ({deleteControl, deleteAction}) => {
+const DeleteFlow = ({deleteControl, deleteAction, disable}) => {
     const [input, setInput] = useState("");
     const [buttonActive, setButtonActive] = useState(false);
 
@@ -28,7 +28,7 @@ const DeleteFlow = ({deleteControl, deleteAction}) => {
     return (
         <Popover>
             <PopoverTrigger>
-                <Button colorScheme="red" py={2}>Delete</Button>
+                <Button isDisabled={disable} colorScheme="red" py={2}>Delete</Button>
             </PopoverTrigger>
             <PopoverContent>
                 <PopoverArrow/>

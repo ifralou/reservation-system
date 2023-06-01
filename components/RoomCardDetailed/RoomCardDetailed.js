@@ -3,13 +3,19 @@ import {
     Button,
     Card,
     CardBody,
-    Flex, FormControl, FormLabel,
+    Flex,
+    FormControl,
+    FormLabel,
     Heading,
-    HStack, Icon,
-    Input, InputGroup, InputRightElement,
-    Select, Spacer,
+    HStack,
+    Icon,
+    Input,
+    InputGroup,
+    InputRightElement,
+    Select,
+    Spacer,
     Text,
-    useToast, VStack
+    useToast
 } from "@chakra-ui/react";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
@@ -138,7 +144,7 @@ const RoomCardDetailed = ({room}) => {
                 _hover={{borderColor: "gray.400"}}
                 _focus={{outline: "none", boxShadow: "outline"}}
                 cursor="pointer"
-                paddingRight="2.5rem" // Adjust the padding here
+                paddingRight="2.5rem"
             />
             <InputRightElement pointerEvents="none" top="50%" transform="translateY(-50%)">
                 <Icon as={FaAngleDown} color="gray.500"/>
@@ -146,10 +152,20 @@ const RoomCardDetailed = ({room}) => {
         </InputGroup>
     ));
 
+    /**
+     * Convert string to its normal form, e.g. BOARDROOM -> Boardroom
+     * @param str
+     * @returns {string}
+     */
+    const normalizeString = (str) => {
+        const lowercase = str.toLowerCase();
+        return lowercase.replace(/^\w/, (c) => c.toUpperCase())
+    };
+
     let {
         id, buildingId,
         name, description,
-        img, capacity, layout, noiseLevel,
+        img, capacity, roomLayout, noiseLevel,
         roomFeatures,
     } = room;
 
@@ -171,12 +187,14 @@ const RoomCardDetailed = ({room}) => {
                         </Flex>
                         <Flex direction="column" align="center">
                             <Text fontSize="lg" textAlign="center">
-                                <Text fontSize="lg" as="span" fontWeight="bold">Layout:</Text>{" "}{layout}
+                                <Text fontSize="lg" as="span" fontWeight="bold">Layout:</Text>{" "}{
+                                    normalizeString(roomLayout).replace("_", "-") // U_shaped -> U-shaped
+                                }
                             </Text>
                         </Flex>
                         <Flex direction="column" align="center">
                             <Text fontSize="lg" textAlign="center">
-                                <Text fontSize="lg" as="span" fontWeight="bold">Noise Level:</Text>{" "}{noiseLevel}
+                                <Text fontSize="lg" as="span" fontWeight="bold">Noise Level:</Text>{" "}{normalizeString(noiseLevel)}
                             </Text>
                         </Flex>
                     </HStack>

@@ -168,6 +168,7 @@ const RoomCardDetailed = ({room}) => {
         img, capacity, roomLayout, noiseLevel,
         roomFeatures,
     } = room;
+    let featuresList = roomFeatures.map((f) => f.feature.name);
 
     return (
         <Card width="100%">
@@ -201,55 +202,55 @@ const RoomCardDetailed = ({room}) => {
 
                     <Flex wrap="wrap" align="start">
                         <TooltipIcon
-                            active={roomFeatures.includes("conditioning")}
+                            active={featuresList.includes("AC")}
                             textTooltip="Air Condition"
                             icon={TbAirConditioning}
                             margin={2}
                         />
                         <TooltipIcon
-                            active={roomFeatures.includes("projector")}
+                            active={featuresList.includes("PROJECTOR")}
                             textTooltip="Projector"
                             icon={BsProjector}
                             margin={2}
                         />
                         <TooltipIcon
-                            active={roomFeatures.includes("phone")}
+                            active={featuresList.includes("PHONE")}
                             textTooltip="Phone"
                             icon={AiOutlinePhone}
                             margin={2}
                         />
                         <TooltipIcon
-                            active={roomFeatures.includes("white")}
+                            active={featuresList.includes("WHITEBOARD")}
                             textTooltip="Whiteboard"
                             icon={TfiBlackboard}
                             margin={2}
                         />
                         <TooltipIcon
-                            active={roomFeatures.includes("printer")}
+                            active={featuresList.includes("PRINTER")}
                             textTooltip="Printer"
                             icon={AiOutlinePrinter}
                             margin={2}
                         />
                         <TooltipIcon
-                            active={roomFeatures.includes("sound")}
+                            active={featuresList.includes("SOUND_SYSTEM")}
                             textTooltip="Sound System"
                             icon={RiSurroundSoundLine}
                             margin={2}
                         />
                         <TooltipIcon
-                            active={roomFeatures.includes("wifi")}
+                            active={featuresList.includes("WIFI")}
                             textTooltip="Wi-Fi"
                             icon={AiOutlineWifi}
                             margin={2}
                         />
                         <TooltipIcon
-                            active={roomFeatures.includes("accessibility")}
+                            active={featuresList.includes("ACCESSIBILITY")}
                             textTooltip="Wheelchair Accessible"
                             icon={GrWheelchairActive}
                             margin={2}
                         />
                         <TooltipIcon
-                            active={roomFeatures.includes("refreshment")}
+                            active={featuresList.includes("REFRESHMENT")}
                             textTooltip="Refreshments"
                             icon={MdFastfood}
                             margin={2}

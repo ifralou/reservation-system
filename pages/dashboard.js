@@ -49,9 +49,9 @@ export default function Dashboard() {
                                 Prev
                             </Button>
                             <Button isActive variant={"outlined"} href={"#"}>
-                                {currentPage}
+                                {currentPage + 1}
                             </Button>
-                            <Button isDisabled={currentPage > data.totalPages - 1} colorScheme="green" size={"lg"} onClick={() => setCurrenPage(page => page + 1)}>
+                            <Button isDisabled={currentPage > data.totalPages - 2} colorScheme="green" size={"lg"} onClick={() => setCurrenPage(page => page + 1)}>
                                 Next
                             </Button>
                         </HStack>

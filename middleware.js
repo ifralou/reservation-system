@@ -37,12 +37,21 @@ export default withMiddlewareAuthRequired(async function (req) {
     const { user} = await getSession(req, res);
 
     res.isAdmin = user['app/roles'].includes("Admin");
+    const isBaned = user["app/roles"].includes("Baned");
 
-    if (req.url.endsWith("/admin") && !user["app/roles"].includes("Admin")) {
+    if(isBaned) {
+        console.log("Banned user redirect.")
+      return NextResponse.redirect(
+          "https://www.google.com"
+      )
+    }
+
+    if(req.url.endsWith("/admin") && !user["app/roles"].includes("Admin")) {
         return NextResponse.redirect(
             req.url.replace("/admin", "/")
         )
     }
+
 
     // Implanting token to request on external api
     if(req.url.includes("/api/external") && user["app/roles"].includes("Admin")) {

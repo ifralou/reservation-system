@@ -23,21 +23,19 @@ import DeleteFlow from "@/components/Admin/DeleteFlow/DeleteFlow";
 import Loader from "@/components/Loader/Loader";
 
 
-
 const UserManagementTab = () => {
     const [users, setUsers] = useState({});
 
+    console.log(users);
     const getUsers = async () => {
         fetch("/api/external/user")
             .then(res => res.json())
             .then(res => setUsers(res.users));
     };
 
-    console.log(users);
-
 
     useEffect(() => {
-       getUsers();
+        getUsers();
     }, []);
 
     const deleteUserById = (id) =>
@@ -47,7 +45,7 @@ const UserManagementTab = () => {
                 id: id
             })
         }).then(res => {
-           getUsers()
+            getUsers()
         })
 
 
@@ -60,8 +58,12 @@ const UserManagementTab = () => {
                             <h2>
                                 <AccordionButton>
                                     <HStack flex='1' textAlign='left'>
-                                        <Text>{user.name}</Text>
-                                        <Text>{user.email}</Text>
+                                        <Text color={user.roles.includes("Baned") ? "grey" : ""}>{user.name}</Text>
+                                        <Text color={user.roles.includes("Baned") ? "grey" : ""}>{user.email}</Text>
+                                        {
+                                            user.roles.includes("Baned") &&
+                                            <Text color="red">User is baned</Text>
+                                        }
                                     </HStack>
                                     <AccordionIcon/>
                                 </AccordionButton>
@@ -85,7 +87,8 @@ const UserManagementTab = () => {
 
                                         </Box>
 
-                                        <DeleteFlow disable={user && user.roles.includes("Baned")} deleteControl={user.name} deleteAction={deleteUserById(user.id)}/>
+                                        <DeleteFlow disable={user && user.roles.includes("Baned")}
+                                                    deleteControl={user.name} deleteAction={deleteUserById(user.id)}/>
 
                                     </HStack>
                                 </List>

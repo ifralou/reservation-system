@@ -1,13 +1,18 @@
-import {roomsFull} from "@/connectors/mocks";
-import {useRouter} from "next/router";
+import {useBackendServiceURL} from "@/utils/utlis";
 
-export default function handler(req, res) {
-    const {id, equipment} = req.query;
+export const useMicroShit = (relative) => `http://localhost:5050${relative}`;
+
+export default async function handler(req, res) {
+    const {id} = req.query;
+    console.log("ROOMID")
+    console.log(id[0]);
 
     if(id) {
-        res.status(200).json(roomsFull[id]);
-    } else {
-        res.status(200).json({})
+        const response = await fetch(useMicroShit(`/rooms/${id}`))
+            .then(res => res.json());
+        res.status(200).json(response);
+        console.log(response);
     }
 
+    res.status(418).json({message : "obser"});
 }

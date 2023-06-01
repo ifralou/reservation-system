@@ -23,7 +23,7 @@ export default function Dashboard() {
         <SiteWrapper>
 
             {
-                isLoading ?
+                !data || isLoading ?
                     <Loader/> :
 
                     <VStack>

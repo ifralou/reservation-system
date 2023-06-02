@@ -34,7 +34,7 @@ Most of the things are here to complain with formal requirements of NSS semestra
   - vyuziti elasticsearch (volitelné -2b pokud není)
     - In backend part.
   - pouziti alespon 5 design patternu (musi davat smysl :) ) (povinné)
-    - State, Promises, Factory method, Factory method, Chain of responsibility, Adapter, Facade 
+    - State, Promises, Factory method, Chain of responsibility, Adapter, Facade 
   - za kazdeho clena tymu 2 UC (use cases - aby SW nebyl trivialni) (povinné)
     - See in docs.
 

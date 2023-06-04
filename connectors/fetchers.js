@@ -67,28 +67,37 @@ export const roomEquipmentSendRefresh = async (buildingId, roomId, features) => 
     return body.features;
 };
 
+/**
+ * Send reservation cancellation request.
+ *
+ * @param reservationId
+ * @returns {Promise<unknown>}
+ */
 export const cancelReservationSend = async (reservationId) => {
-    console.log("Push to the BE. " + reservationId);
-    // return Promise.reject("POSHEL NAHUY")
+    console.log("Push reservation cancellation to the BE. " + reservationId);
     return promisifyMockObject(reservationId);
 }
 
-const callBackend = async (url, callback, options) => {
-   fetch(url, {
-       ...options,
-       headers: {
-          "X-API-KEY" : process.env.BE_API_KEY
-       }
-   })
-}
-
+/**
+ * Fetch existing reservations for date.
+ *
+ * @param date
+ * @returns {Promise<unknown>}
+ */
 export const fetchExistingReservations = async(date) => {
     const reservedSlots = ["16:00", "16:15", "16:30"];
     return promisifyMockObject(reservedSlots);
 }
 
+/**
+ * Send reservation saving request.
+ *
+ * @param date
+ * @param startTime
+ * @param endTime
+ * @returns {Promise<unknown>}
+ */
 export const sendSaveReservation = async(date, startTime, endTime) => {
     const reservationId = 10;
-    // return Promise.reject("POSHEL NAHUY")
     return promisifyMockObject(reservationId);
 }
